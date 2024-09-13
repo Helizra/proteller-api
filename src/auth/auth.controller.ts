@@ -34,6 +34,10 @@ export class AuthController {
   @UseGuards(JwtAuthGuard)
   @Get('me')
   async getMe(@Request() req: any) {
-    return this.userService.findOne(req.user.id);
+    if (!req.user?.userId) {
+      throw new UnauthorizedException();
+    }
+    const user = await this.userService.findOne(req.user.userId);
+    return user;
   }
 }
