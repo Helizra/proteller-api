@@ -1,5 +1,12 @@
 import { Project } from 'src/projects/project.entity';
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 
 @Entity()
 export class Document {
@@ -9,10 +16,10 @@ export class Document {
   @Column()
   title: string;
 
-  @Column({ default: new Date() })
+  @CreateDateColumn()
   createdAt: Date;
 
-  @Column({ default: new Date() })
+  @UpdateDateColumn()
   updatedAt: Date;
 
   @Column({ default: 'Draft 1' })
@@ -24,6 +31,6 @@ export class Document {
   @Column()
   content: string;
 
-  @ManyToOne(() => Project, (project) => project.documents)
+  @ManyToOne(() => Project, (project) => project.id)
   project: Project;
 }

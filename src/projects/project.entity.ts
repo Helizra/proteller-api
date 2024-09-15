@@ -1,5 +1,15 @@
 import { Document } from 'src/documents/document.entity';
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { User } from 'src/users/entities/user.entity';
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  OneToMany,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 
 @Entity()
 export class Project {
@@ -9,18 +19,21 @@ export class Project {
   @Column()
   title: string;
 
-  @Column({default:new Date()})
+  @CreateDateColumn()
   createdAt: Date;
 
-  @Column({default:new Date()})
+  @UpdateDateColumn()
   updatedAt: Date;
 
   @Column()
   description: string;
 
-  @Column({default:'Draft 1'})
-  status : string;
+  @Column({ default: 'Draft 0' })
+  status: string;
 
-  @OneToMany(()=> Document, document => document.project)
-  documents : Document
+  @OneToMany(() => Document, (document) => document.project)
+  documents: Document[];
+
+  @ManyToOne(() => User, (user) => user.id, { nullable: false })
+  user: User;
 }

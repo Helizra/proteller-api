@@ -1,4 +1,12 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Project } from 'src/projects/project.entity';
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  OneToMany,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 
 @Entity()
 export class User {
@@ -14,9 +22,12 @@ export class User {
   @Column()
   password: string;
 
-  @Column({ default: new Date() })
+  @CreateDateColumn()
   createdAt: Date;
 
-  @Column({ default: new Date() })
+  @UpdateDateColumn()
   updatedAt: Date;
+
+  @OneToMany(() => Project, (project) => project.user)
+  projects: Project[];
 }
