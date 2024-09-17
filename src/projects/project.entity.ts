@@ -25,7 +25,7 @@ export class Project {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  @Column()
+  @Column({ default: 'Description' })
   description: string;
 
   @Column({ default: 'Draft 0' })
