@@ -30,4 +30,10 @@ export class ProjectsService {
   create(project: Project): Promise<Project> {
     return this.projectRepository.save(project);
   }
+
+  async update(id: string, project: Project) {
+    project.updatedAt = new Date();
+    await this.projectRepository.update(id, project);
+    return this.projectRepository.findOne({ where: { id: id } });
+  }
 }
